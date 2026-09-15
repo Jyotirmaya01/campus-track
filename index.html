@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CampusTrack - College Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= LOGIN PAGE ================= -->
+
+    <div id="loginPage" class="login-page">
+
+        <div class="login-box">
+
+            <div class="logo">CT</div>
+
+            <h1>CampusTrack</h1>
+
+            <p class="login-title">
+                College Management System
+            </p>
+
+            <form id="loginForm">
+
+                <label>Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="teacher@college.edu"
+                    required
+                >
+
+                <label>Username</label>
+                <input
+                    type="text"
+                    id="text"
+                    placeholder="Anant@12 or any"
+                >
+
+                <label>College / Address</label>
+                <input
+                    type="text"
+                    id="address"
+                    placeholder="Enter college address"
+                    required
+                >
+
+                <label>Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    required
+                >
+
+                <button type="submit" class="login-button">
+                    Enter Dashboard
+                </button>
+
+            </form>
+
+            <p class="demo-message">
+                Demo project
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN APPLICATION ================= -->
+
+    <div id="dashboardPage" class="hidden">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar">
+
+            <div class="brand">
+                <div class="small-logo">CT</div>
+                <span>CampusTrack</span>
+            </div>
+
+            <div id="loggedUser" class="logged-user">
+                Demo User
+            </div>
+
+            <nav>
+
+                <button onclick="showPage('dashboard')" class="menu-button active">
+                    Dashboard
+                </button>
+
+                <div class="more-menu">
+
+                    <button
+                        id="moreMenuButton"
+                        class="more-menu-button"
+                        type="button"
+                        onclick="toggleMoreMenu(event)">
+                        <span>⋮</span>
+                        <span>More sections</span>
+                    </button>
+
+                    <div id="moreMenu" class="more-menu-items hidden">
+
+                        <button onclick="showPage('students')" class="menu-button">
+                            Students
+                        </button>
+
+                        <button onclick="showPage('attendance')" class="menu-button">
+                            Attendance
+                        </button>
+
+                        <button onclick="showPage('teachers')" class="menu-button">
+                            Teachers
+                        </button>
+
+                        <button onclick="showPage('academics')" class="menu-button">
+                            Academics
+                        </button>
+
+                        <button onclick="showPage('fees')" class="menu-button">
+                            Fees & Payments
+                        </button>
+
+                        <button onclick="showPage('results')" class="menu-button">
+                            Results
+                        </button>
+
+                        <button onclick="showPage('timetable')" class="menu-button">
+                            Timetable
+                        </button>
+
+                        <button onclick="showPage('notices')" class="menu-button">
+                            Notices
+                        </button>
+
+                        <button onclick="logout()" class="logout-button">
+                            Logout
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+
+        <main class="main-content">
+
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <section id="dashboard" class="page active">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>College Dashboard</h1>
+
+                        <p>
+                            Welcome to CampusTrack Management System
+                        </p>
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="openStudentForm()">
+                        + Add Student
+                    </button>
+
+                </div>
+
+
+                <!-- STATISTICS -->
+
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <h3>Total Students</h3>
+                        <strong id="totalStudents">0</strong>
+                        <p>Registered students</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Present Today</h3>
+                        <strong id="presentStudents">0</strong>
+                        <p>Today's attendance</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Departments</h3>
+                        <strong id="totalDepartments">0</strong>
+                        <p>Active departments</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Teachers</h3>
+                        <strong id="totalTeachers">6</strong>
+                        <p>Faculty members</p>
+                    </div>
+
+                </div>
+
+
+                <!-- DASHBOARD CONTENT -->
+
+                <div class="two-column">
+
+                    <div class="card">
+
+                        <h2>Recent Students</h2>
+
+                        <div id="recentStudents"></div>
+
+                    </div>
+
+
+                    <div class="card">
+
+                        <h2>Recent Activity</h2>
+
+                        <div id="recentActivity"></div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= STUDENTS ================= -->
+
+            <section id="students" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Student Register</h1>
+                        <p>Manage all student information.</p>
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="openStudentForm()">
+                        + Add Student
+                    </button>
+
+                </div>
+
+
+                <div class="card">
+
+                    <input
+                        type="text"
+                        id="studentSearch"
+                        class="search-box"
+                        placeholder="Search student..."
+                        onkeyup="searchStudents()"
+                    >
+
+
+                    <table>
+
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Name</th>
+                                <th>Department</th>
+                                <th>Year</th>
+                                <th>Phone</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+
+                        <tbody id="studentTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= ATTENDANCE ================= -->
+
+            <section id="attendance" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Attendance</h1>
+
+                        <p>
+                            Manage student attendance.
+                        </p>
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        onclick="markAllPresent()">
+                        Mark All Present
+                    </button>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="attendance-summary" id="attendanceSummary"></div>
+
+                    <table>
+
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Student</th>
+                                <th>Department</th>
+                                <th>Attendance</th>
+                            </tr>
+
+                        <tbody id="attendanceTable">
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= TEACHERS ================= -->
+
+            <section id="teachers" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Teacher Directory</h1>
+
+                        <p>
+                            Faculty members and teacher check-in.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div id="teacherList" class="teacher-grid">
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= ACADEMICS ================= -->
+
+            <section id="academics" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Academics</h1>
+
+                        <p>
+                            Academic overview of the college.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <h3>Active Courses</h3>
+                        <strong>32</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Average Attendance</h3>
+                        <strong>86%</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Pass Rate</h3>
+                        <strong>91%</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Assignments</h3>
+                        <strong>148</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h2>Department Overview</h2>
+
+                    <table>
+
+                            <tr>
+                                <th>Department</th>
+                                <th>Students</th>
+                                <th>Faculty</th>
+                                <th>Attendance</th>
+                            </tr>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Computer Science</td>
+                                <td>248</td>
+                                <td>18</td>
+                                <td>89%</td>
+                            </tr>
+
+                            <tr>
+                                <td>Information Technology</td>
+                                <td>196</td>
+                                <td>14</td>
+                                <td>87%</td>
+                            </tr>
+
+                            <tr>
+                                <td>Electronics</td>
+                                <td>174</td>
+                                <td>13</td>
+                                <td>84%</td>
+                            </tr>
+
+                            <tr>
+                                <td>Mechanical</td>
+                                <td>152</td>
+                                <td>12</td>
+                                <td>82%</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= FEES ================= -->
+
+            <section id="fees" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Fees & Payments</h1>
+
+                        <p>
+                            Track student fee payments.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="stats">
+
+                    <div class="stat-card">
+                        <h3>Total Collected</h3>
+                        <strong>₹42.8L</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Pending</h3>
+                        <strong>₹12.1L</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Overdue</h3>
+                        <strong>₹3.4L</strong>
+                    </div>
+
+                    <div class="stat-card">
+                        <h3>Scholarships</h3>
+                        <strong>₹6.8L</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <h2>Recent Payments</h2>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Student</th>
+                                <th>Roll No.</th>
+                                <th>Semester</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Aarav Sharma</td>
+                                <td>CS-2026-001</td>
+                                <td>Semester 5</td>
+                                <td>₹48,000</td>
+                                <td><span class="badge present">Paid</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Diya Patel</td>
+                                <td>IT-2026-002</td>
+                                <td>Semester 3</td>
+                                <td>₹45,000</td>
+                                <td><span class="badge present">Paid</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>Kabir Mehta</td>
+                                <td>BA-2026-005</td>
+                                <td>Semester 5</td>
+                                <td>₹42,000</td>
+                                <td><span class="badge leave">Pending</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= RESULTS ================= -->
+
+            <section id="results" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Results</h1>
+
+                        <p>
+                            Student academic performance.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Roll No.</th>
+                                <th>Student</th>
+                                <th>CGPA</th>
+                                <th>Credits</th>
+                                <th>Result</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>CS-2026-001</td>
+                                <td>Aarav Sharma</td>
+                                <td>8.7</td>
+                                <td>24</td>
+                                <td><span class="badge present">Pass</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>IT-2026-002</td>
+                                <td>Diya Patel</td>
+                                <td>9.1</td>
+                                <td>24</td>
+                                <td><span class="badge present">Pass</span></td>
+                            </tr>
+
+                            <tr>
+                                <td>EC-2026-003</td>
+                                <td>Rohan Verma</td>
+                                <td>7.4</td>
+                                <td>24</td>
+                                <td><span class="badge present">Pass</span></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= TIMETABLE ================= -->
+
+            <section id="timetable" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Timetable</h1>
+
+                        <p>
+                            Weekly class schedule.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Time</th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>09:00 - 10:00</td>
+                                <td>Data Structures</td>
+                                <td>DBMS</td>
+                                <td>Networks</td>
+                                <td>Operating Systems</td>
+                                <td>AI & ML</td>
+                            </tr>
+
+                            <tr>
+                                <td>10:15 - 11:15</td>
+                                <td>DBMS</td>
+                                <td>AI & ML</td>
+                                <td>Data Structures</td>
+                                <td>Networks</td>
+                                <td>Project Lab</td>
+                            </tr>
+
+                            <tr>
+                                <td>11:30 - 12:30</td>
+                                <td>Networks</td>
+                                <td>Project Lab</td>
+                                <td>DBMS</td>
+                                <td>AI & ML</td>
+                                <td>Operating Systems</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- ================= NOTICES ================= -->
+
+            <section id="notices" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Notices & Announcements</h1>
+
+                        <p>
+                            Important college announcements.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="card">
+
+                    <div class="notice">
+                        <h3>Semester Examination Form</h3>
+                        <p>
+                            Students must submit their examination forms
+                            before 20 September 2026.
+                        </p>
+                    </div>
+
+                    <div class="notice">
+                        <h3>Faculty Development Workshop</h3>
+                        <p>
+                            Faculty development workshop will be held
+                            on 25 September 2026.
+                        </p>
+                    </div>
+
+                    <div class="notice">
+                        <h3>Technical Fest Registration</h3>
+                        <p>
+                            Inter-college technical fest registrations
+                            are now open.
+                        </p>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- ================= ADD STUDENT POPUP ================= -->
+
+    <div id="studentModal" class="modal">
+
+        <div class="modal-box">
+
+            <div class="modal-header">
+
+                <h2>Add Student</h2>
+
+                <button onclick="closeStudentForm()">
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="studentForm">
+
+                <label>Roll Number</label>
+
+                <input
+                    type="text"
+                    id="roll"
+                    placeholder="CS-2026-006"
+                    required
+                >
+
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Student name"
+                    required
+                >
+
+
+                <label>Department</label>
+
+                <select id="department">
+
+                    <option>Computer Science</option>
+                    <option>Information Technology</option>
+                    <option>Electronics</option>
+                    <option>Mechanical</option>
+                    <option>Business Administration</option>
+
+                </select>
+
+
+                <label>Academic Year</label>
+
+                <select id="year">
+
+                    <option>1st Year</option>
+                    <option>2nd Year</option>
+                    <option>3rd Year</option>
+                    <option>4th Year</option>
+
+                </select>
+
+
+                <label>Phone</label>
+
+                <input
+                    type="text"
+                    id="phone"
+                    placeholder="9876543210"
+                >
+
+
+                <label>Email</label>
+
+                <input
+                    type="email"
+                    id="studentEmail"
+                    placeholder="student@college.edu"
+                >
+
+
+                <div class="modal-buttons">
+
+                    <button
+                        type="button"
+                        class="secondary-button"
+                        onclick="closeStudentForm()">
+                        Cancel
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="primary-button">
+                        Save Student
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
