@@ -388,6 +388,129 @@ nav {
     margin-bottom: 18px;
 }
 
+.smart-insights {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.insight-card {
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+    border: 1px solid #e6eaf1;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 8px 22px rgba(49, 94, 251, 0.04);
+}
+
+.insight-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.tag {
+    display: inline-block;
+    background: #edf3ff;
+    color: #315efb;
+    border-radius: 999px;
+    padding: 5px 10px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.trend {
+    font-size: 11px;
+    font-weight: bold;
+    padding: 5px 8px;
+    border-radius: 999px;
+}
+
+.trend.positive {
+    background: #e8f8ef;
+    color: #16834b;
+}
+
+.trend.warning {
+    background: #fff4dc;
+    color: #a66300;
+}
+
+.trend.danger {
+    background: #ffe4e4;
+    color: #c53a3a;
+}
+
+.pulse-card h3 {
+    margin: 0;
+    font-size: 30px;
+    color: #172033;
+}
+
+.pulse-card p {
+    margin: 8px 0 0;
+    color: #6d7688;
+    font-size: 12px;
+}
+
+.mini-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mini-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f8fafd;
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.mini-list strong {
+    display: block;
+    font-size: 12px;
+    color: #172033;
+}
+
+.mini-list small {
+    display: block;
+    color: #6d7688;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+.dot.danger {
+    background: #ef5b5b;
+}
+
+.dot.warning {
+    background: #f4b740;
+}
+
+.empty-item {
+    display: block !important;
+    background: transparent !important;
+    color: #6d7688;
+    font-size: 12px;
+    padding: 0 !important;
+}
+
 .stat-card {
     background: white;
 
@@ -795,6 +918,10 @@ td {
 
     .stats {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    .smart-insights {
+        grid-template-columns: 1fr;
     }
 
     .two-column {

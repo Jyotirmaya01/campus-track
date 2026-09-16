@@ -268,17 +268,71 @@ function updateDashboard() {
     document.getElementById("totalDepartments").innerText =
         departments.length;
 
-
+    renderSmartInsights();
     displayRecentStudents();
-
     displayActivities();
-
     displayStudents();
-
     displayAttendance();
-
     displayTeachers();
 
+}
+
+function renderSmartInsights() {
+    let pulseValue = document.getElementById("pulseValue");
+    let pulseSummary = document.getElementById("pulseSummary");
+    let pulseTrend = document.getElementById("pulseTrend");
+    let riskRadarList = document.getElementById("riskRadarList");
+    let actionQueueList = document.getElementById("actionQueueList");
+
+    if (!pulseValue || !pulseSummary || !pulseTrend || !riskRadarList || !actionQueueList) {
+        return;
+    }
+
+    let totalStudentsCount = students.length || 1;
+    let presentCount = students.filter(function(student) {
+        return student.status === "Present";
+    }).length;
+    let attendanceRate = Math.round((presentCount / totalStudentsCount) * 100);
+
+    let riskStudents = students.filter(function(student) {
+        return student.status !== "Present";
+    });
+
+    pulseValue.innerText = attendanceRate + "%";
+    pulseSummary.innerText = presentCount + " students are in class today • " + riskStudents.length + " need attention";
+
+    if (attendanceRate >= 80) {
+        pulseTrend.innerText = "Strong";
+        pulseTrend.className = "trend positive";
+    } else if (attendanceRate >= 60) {
+        pulseTrend.innerText = "Watch";
+        pulseTrend.className = "trend warning";
+    } else {
+        pulseTrend.innerText = "Critical";
+        pulseTrend.className = "trend danger";
+    }
+
+    let riskItems = riskStudents.slice(0, 3).map(function(student) {
+        let severity = student.status === "Absent" ? "High" : "Medium";
+        return '<li><span class="dot ' + (severity === "High" ? "danger" : "warning") + '"></span><div><strong>' + student.name + '</strong><small>' + student.status + ' • ' + student.department + '</small></div></li>';
+    });
+
+    if (riskItems.length === 0) {
+        riskRadarList.innerHTML = '<li class="empty-item">No follow-ups required today.</li>';
+    } else {
+        riskRadarList.innerHTML = riskItems.join("");
+    }
+
+    let actionItems = riskStudents.slice(0, 3).map(function(student) {
+        let actionText = student.status === "Absent" ? "Call parent + mark follow-up" : "Send reminder for leave approval";
+        return '<li><strong>' + student.name + '</strong><small>' + actionText + '</small></li>';
+    });
+
+    if (actionItems.length === 0) {
+        actionQueueList.innerHTML = '<li class="empty-item">No urgent action queue.</li>';
+    } else {
+        actionQueueList.innerHTML = actionItems.join("");
+    }
 }
 
 
