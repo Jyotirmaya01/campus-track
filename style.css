@@ -437,7 +437,8 @@ nav {
 
 .card h2 {
     margin-top: 0;
-
+    font-size: 17px;
+}
 
 .attendance-summary {
     display: flex;
@@ -512,8 +513,6 @@ nav {
 .leave-button {
     background: #ffedc2;
     color: #9a6505;
-}
-    font-size: 17px;
 }
 
 

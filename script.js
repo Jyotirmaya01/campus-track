@@ -122,21 +122,24 @@ document.getElementById("loginForm").addEventListener("submit", function(event) 
 
     event.preventDefault();
 
-    let email = document.getElementById("email").value;
+    let email = document.getElementById("email").value.trim();
+    let username = document.getElementById("text").value.trim();
+    let address = document.getElementById("address").value.trim();
+    let password = document.getElementById("password").value.trim();
 
-    /*
-        This is NOT real authentication.
-
-        We are simply accepting whatever the user enters.
-    */
+    if (!email || !username || !address || !password) {
+        alert("Please fill in all login fields before continuing.");
+        return;
+    }
 
     document.getElementById("loginPage").classList.add("hidden");
-
     document.getElementById("dashboardPage").classList.remove("hidden");
 
+    let displayName = username || email;
     document.getElementById("loggedUser").innerText =
-        email + " - Demo User";
+        email + " • " + displayName;
 
+    showPage("dashboard");
     updateDashboard();
 
 });
@@ -150,61 +153,35 @@ function showPage(pageName) {
 
     closeMoreMenu();
 
-    let pages = document.querySelectorAll(".page");
-
-    /*
-        Hide every page
-    */
-
-    for (let i = 0; i < pages.length; i++) {
-
-        pages[i].classList.remove("active");
-
+    let page = document.getElementById(pageName);
+    if (!page) {
+        return;
     }
 
+    let pages = document.querySelectorAll(".page");
 
-    /*
-        Show selected page
-    */
+    for (let i = 0; i < pages.length; i++) {
+        pages[i].classList.remove("active");
+    }
 
-    document.getElementById(pageName).classList.add("active");
-
-
-    /*
-        Update sidebar button
-    */
+    page.classList.add("active");
 
     let buttons = document.querySelectorAll(".menu-button");
 
     for (let i = 0; i < buttons.length; i++) {
-
         buttons[i].classList.remove("active");
-
     }
-
-
-    /*
-        Find the button that opened this page
-    */
 
     for (let i = 0; i < buttons.length; i++) {
-
-        if (buttons[i].getAttribute("onclick") ===
-            "showPage('" + pageName + "')") {
-
+        let onclickValue = buttons[i].getAttribute("onclick");
+        if (onclickValue && onclickValue.includes("showPage('" + pageName + "')")) {
             buttons[i].classList.add("active");
-
         }
-
     }
 
-
-    /*
-        Refresh data
-    */
-
-    updateDashboard();
-
+    if (pageName === "dashboard") {
+        updateDashboard();
+    }
 }
 
 
@@ -507,33 +484,24 @@ function getStatusClass(status) {
 
 function searchStudents() {
 
-    let search =
-        document.getElementById("studentSearch")
-        .value
-        .toLowerCase();
+    let searchInput = document.getElementById("studentSearch");
+    let table = document.getElementById("studentTable");
 
+    if (!searchInput || !table) {
+        return;
+    }
 
-    let rows =
-        document.getElementById("studentTable")
-        .getElementsByTagName("tr");
-
+    let search = searchInput.value.trim().toLowerCase();
+    let rows = table.getElementsByTagName("tr");
 
     for (let i = 0; i < rows.length; i++) {
+        let text = rows[i].innerText.toLowerCase();
 
-        let text =
-            rows[i].innerText.toLowerCase();
-
-
-        if (text.includes(search)) {
-
+        if (!search || text.includes(search)) {
             rows[i].style.display = "";
-
         } else {
-
             rows[i].style.display = "none";
-
         }
-
     }
 
 }
