@@ -113,6 +113,17 @@ let activities = [
 
 ];
 
+let examAlerts = [
+    {
+        title: "Semester Examination Form",
+        details: "Submit examination forms before 20 September 2026.",
+        date: "2026-09-20",
+        scope: "All departments",
+        recipients: 5,
+        sentAt: "Today"
+    }
+];
+
 
 /* =====================================================
    LOGIN
@@ -269,6 +280,9 @@ function updateDashboard() {
         departments.length;
 
     renderSmartInsights();
+    renderExamAlertSummary();
+    displayExamAlerts();
+    updateRecipientCount();
     displayRecentStudents();
     displayActivities();
     displayStudents();
@@ -276,6 +290,118 @@ function updateDashboard() {
     displayTeachers();
 
 }
+
+function getExamRecipients(scope) {
+    if (scope === "All departments") {
+        return students.length;
+    }
+
+    return students.filter(function(student) {
+        return student.department === scope;
+    }).length;
+}
+
+function renderExamAlertSummary() {
+    let title = document.getElementById("nextExamTitle");
+    let summary = document.getElementById("nextExamSummary");
+    let count = document.getElementById("examAlertCount");
+
+    if (!title || !summary || !count) {
+        return;
+    }
+
+    let latestAlert = examAlerts[0];
+    count.innerText = examAlerts.length;
+
+    if (!latestAlert) {
+        title.innerText = "No exam alert scheduled";
+        summary.innerText = "Create one campus-wide alert for every student.";
+        return;
+    }
+
+    title.innerText = latestAlert.title;
+    summary.innerText = latestAlert.recipients + " students notified • " + latestAlert.scope;
+}
+
+function updateRecipientCount() {
+    let scope = document.getElementById("examScope");
+    let count = document.getElementById("recipientCount");
+
+    if (!scope || !count) {
+        return;
+    }
+
+    count.innerText = getExamRecipients(scope.value);
+}
+
+function displayExamAlerts() {
+    let container = document.getElementById("examAlertList");
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = "";
+
+    if (examAlerts.length === 0) {
+        container.innerHTML = '<p class="muted-text">No exam alerts have been sent yet.</p>';
+        return;
+    }
+
+    examAlerts.forEach(function(alertItem) {
+        let item = document.createElement("div");
+        item.className = "exam-alert-item";
+        item.innerHTML =
+            '<div><span class="badge present">Delivered</span><h3>' +
+            alertItem.title +
+            '</h3><p>' +
+            alertItem.details +
+            '</p><small>' +
+            alertItem.scope + " • Exam date: " + alertItem.date +
+            '</small></div><strong>' +
+            alertItem.recipients +
+            ' sent</strong>';
+        container.appendChild(item);
+    });
+}
+
+function updateReadiness() {
+    let checks = document.querySelectorAll(".readiness-card input[type='checkbox']");
+    let completed = 0;
+
+    for (let i = 0; i < checks.length; i++) {
+        if (checks[i].checked) {
+            completed++;
+        }
+    }
+
+    document.getElementById("readinessProgress").innerText = completed + "/" + checks.length;
+    document.getElementById("readinessMessage").innerText = completed === checks.length
+        ? "Ready: the department can send the final exam reminder."
+        : "Complete the checklist before sending the final reminder.";
+}
+
+document.getElementById("examScope").addEventListener("change", updateRecipientCount);
+
+document.getElementById("examAlertForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let scope = document.getElementById("examScope").value;
+    let alertItem = {
+        title: document.getElementById("examTitle").value.trim(),
+        details: document.getElementById("examDetails").value.trim(),
+        date: document.getElementById("examDate").value,
+        scope: scope,
+        recipients: getExamRecipients(scope),
+        sentAt: "Just now"
+    };
+
+    examAlerts.unshift(alertItem);
+    activities.unshift(alertItem.title + " sent to " + alertItem.recipients + " students");
+    this.reset();
+    updateDashboard();
+    alert("Exam alert delivered to " + alertItem.recipients + " students.");
+});
 
 function renderSmartInsights() {
     let pulseValue = document.getElementById("pulseValue");

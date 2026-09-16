@@ -511,6 +511,42 @@ nav {
     padding: 0 !important;
 }
 
+.exam-alert-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    border-left: 4px solid #315efb;
+}
+
+.exam-alert-summary h2 {
+    margin: 10px 0 5px;
+}
+
+.exam-alert-summary p,
+.muted-text {
+    color: #6d7688;
+    font-size: 12px;
+}
+
+.exam-alert-summary-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.exam-alert-summary-meta strong {
+    font-size: 24px;
+    color: #315efb;
+}
+
+.exam-alert-summary-meta span {
+    color: #6d7688;
+    font-size: 11px;
+    margin-right: 8px;
+}
+
 .stat-card {
     background: white;
 
@@ -561,6 +597,119 @@ nav {
 .card h2 {
     margin-top: 0;
     font-size: 17px;
+}
+
+.exam-layout {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 18px;
+}
+
+.card-heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 18px;
+}
+
+.card-heading-row h2 {
+    margin: 10px 0 0;
+}
+
+.recipient-count {
+    color: #16834b;
+    background: #e8f8ef;
+    border-radius: 999px;
+    padding: 7px 10px;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.exam-alert-form label {
+    display: block;
+    margin: 14px 0 6px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.exam-alert-form input,
+.exam-alert-form select,
+.exam-alert-form textarea {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #dfe4ed;
+    border-radius: 8px;
+    outline: none;
+    font: inherit;
+    resize: vertical;
+}
+
+.exam-alert-form input:focus,
+.exam-alert-form select:focus,
+.exam-alert-form textarea:focus {
+    border-color: #315efb;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 0;
+    border-bottom: 1px solid #e6eaf1;
+    font-size: 13px;
+}
+
+.checklist-item input {
+    width: 17px;
+    height: 17px;
+    accent-color: #315efb;
+}
+
+.readiness-card > .muted-text {
+    line-height: 1.5;
+    margin-bottom: 0;
+}
+
+.exam-alert-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.exam-alert-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 15px 0;
+    border-bottom: 1px solid #e6eaf1;
+}
+
+.exam-alert-item:last-child {
+    border-bottom: none;
+}
+
+.exam-alert-item h3 {
+    margin: 9px 0 4px;
+    font-size: 14px;
+}
+
+.exam-alert-item p,
+.exam-alert-item small {
+    color: #6d7688;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.exam-alert-item strong {
+    color: #16834b;
+    font-size: 12px;
+    white-space: nowrap;
 }
 
 .attendance-summary {
@@ -924,6 +1073,10 @@ td {
         grid-template-columns: 1fr;
     }
 
+    .exam-layout {
+        grid-template-columns: 1fr;
+    }
+
     .two-column {
         grid-template-columns: 1fr;
     }
@@ -957,6 +1110,21 @@ td {
 
     .teacher-grid {
         grid-template-columns: 1fr;
+    }
+
+    .exam-alert-summary,
+    .exam-alert-summary-meta {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .exam-alert-item {
+        flex-direction: column;
+        gap: 8px;
     }
 
     .page-header {

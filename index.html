@@ -141,6 +141,10 @@
                             Notices
                         </button>
 
+                        <button onclick="showPage('examAlerts')" class="menu-button">
+                            Exam Alerts
+                        </button>
+
                         <button onclick="logout()" class="logout-button">
                             Logout
                         </button>
@@ -236,6 +240,23 @@
                             <span class="tag">Action Queue</span>
                         </div>
                         <ul id="actionQueueList" class="mini-list"></ul>
+                    </div>
+
+                </div>
+
+
+                <div class="card exam-alert-summary">
+
+                    <div>
+                        <span class="tag">Exam communication</span>
+                        <h2 id="nextExamTitle">No exam alert scheduled</h2>
+                        <p id="nextExamSummary">Create one campus-wide alert for every student.</p>
+                    </div>
+
+                    <div class="exam-alert-summary-meta">
+                        <strong id="examAlertCount">0</strong>
+                        <span>active alerts</span>
+                        <button class="primary-button" onclick="showPage('examAlerts')">Open exam alerts</button>
                     </div>
 
                 </div>
@@ -772,6 +793,100 @@
                         </p>
                     </div>
 
+                </div>
+
+            </section>
+
+
+            <!-- ================= EXAM ALERTS ================= -->
+
+            <section id="examAlerts" class="page">
+
+                <div class="page-header">
+
+                    <div>
+                        <h1>Exam Alerts</h1>
+                        <p>Send one verified exam update to every student on campus.</p>
+                    </div>
+
+                </div>
+
+
+                <div class="exam-layout">
+
+                    <div class="card">
+
+                        <div class="card-heading-row">
+                            <div>
+                                <span class="tag">Campus broadcast</span>
+                                <h2>Create an exam alert</h2>
+                            </div>
+                            <span class="recipient-count"><strong id="recipientCount">0</strong> student recipients</span>
+                        </div>
+
+                        <form id="examAlertForm" class="exam-alert-form">
+
+                            <label for="examTitle">Alert title</label>
+                            <input id="examTitle" type="text" placeholder="Semester 5 timetable released" required>
+
+                            <label for="examDetails">Message</label>
+                            <textarea id="examDetails" rows="4" placeholder="Include reporting time, venue, or required documents." required></textarea>
+
+                            <div class="form-grid">
+                                <div>
+                                    <label for="examDate">Exam date</label>
+                                    <input id="examDate" type="date" required>
+                                </div>
+                                <div>
+                                    <label for="examScope">Audience</label>
+                                    <select id="examScope">
+                                        <option value="All departments">All students on campus</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Electronics">Electronics</option>
+                                        <option value="Mechanical">Mechanical</option>
+                                        <option value="Business Administration">Business Administration</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="modal-buttons">
+                                <button type="reset" class="secondary-button">Clear</button>
+                                <button type="submit" class="primary-button">Send alert now</button>
+                            </div>
+
+                        </form>
+
+                    </div>
+
+                    <div class="card readiness-card">
+
+                        <div class="card-heading-row">
+                            <div>
+                                <span class="tag">Department readiness</span>
+                                <h2>Before exam day</h2>
+                            </div>
+                            <strong id="readinessProgress">0/3</strong>
+                        </div>
+
+                        <label class="checklist-item"><input type="checkbox" onchange="updateReadiness()"> Rooms confirmed</label>
+                        <label class="checklist-item"><input type="checkbox" onchange="updateReadiness()"> Invigilators assigned</label>
+                        <label class="checklist-item"><input type="checkbox" onchange="updateReadiness()"> Hall tickets published</label>
+                        <p id="readinessMessage" class="muted-text">Complete the checklist before sending the final reminder.</p>
+
+                    </div>
+
+                </div>
+
+                <div class="card">
+                    <div class="card-heading-row">
+                        <div>
+                            <span class="tag">Delivery log</span>
+                            <h2>Recent campus alerts</h2>
+                        </div>
+                        <span class="muted-text">Newest first</span>
+                    </div>
+                    <div id="examAlertList" class="exam-alert-list"></div>
                 </div>
 
             </section>
