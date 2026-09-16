@@ -118,7 +118,7 @@ let activities = [
    LOGIN
    ===================================================== */
 
-document.getElementById("loginForm").addEventListsener("submit", function(event) {
+document.getElementById("loginForm").addEventListener("submit", function(event) {
 
     event.preventDefault();
 
